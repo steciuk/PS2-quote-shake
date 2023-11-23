@@ -1,5 +1,4 @@
-import * as React from "react"
-import { ComponentType } from "react"
+import React, { ComponentType } from "react"
 import {
   Image,
   ImageStyle,
@@ -85,19 +84,10 @@ export function Icon(props: IconProps) {
 }
 
 export const iconRegistry = {
-  back: require("../../assets/icons/back.png"),
-  bell: require("../../assets/icons/bell.png"),
-  caretLeft: require("../../assets/icons/caretLeft.png"),
-  caretRight: require("../../assets/icons/caretRight.png"),
-  check: require("../../assets/icons/check.png"),
-  hidden: require("../../assets/icons/hidden.png"),
-  ladybug: require("../../assets/icons/ladybug.png"),
-  lock: require("../../assets/icons/lock.png"),
-  menu: require("../../assets/icons/menu.png"),
-  more: require("../../assets/icons/more.png"),
+  heart: require("../../assets/icons/heart.png"),
+  info: require("../../assets/icons/info.png"),
   settings: require("../../assets/icons/settings.png"),
-  view: require("../../assets/icons/view.png"),
-  x: require("../../assets/icons/x.png"),
+  quote: require("../../assets/icons/quote.png"),
 }
 
 const $imageStyleBase: ImageStyle = {

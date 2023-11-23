@@ -1,5 +1,6 @@
+import { Text } from "app/components"
 import React from "react"
 
 export const AboutScreen = () => {
-  return <div>AboutScreen</div>
+  return <Text text="AboutScreen" />
 }

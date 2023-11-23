@@ -1,8 +1,8 @@
+import { Icon } from "app/components"
 import { AppStackParamList } from "app/navigators/AppNavigator"
 import { AboutScreen, FavoritesScreen, QuoteScreen, SettingsScreen } from "app/screens"
-import { colors } from "app/theme"
+import { colors, typography } from "app/theme"
 import React from "react"
-import { ViewStyle } from "react-native"
 import { useSafeAreaInsets } from "react-native-safe-area-context"
 
 import { BottomTabScreenProps, createBottomTabNavigator } from "@react-navigation/bottom-tabs"
@@ -32,11 +32,10 @@ export function TabNavigator() {
       screenOptions={{
         headerShown: false,
         tabBarHideOnKeyboard: true,
-        tabBarStyle: [$tabBar, { height: bottom + 70 }],
-        // tabBarActiveTintColor: colors.text,
-        // tabBarInactiveTintColor: colors.text,
-        // tabBarLabelStyle: $tabBarLabel,
-        // tabBarItemStyle: $tabBarItem,
+        tabBarStyle: { height: bottom + 70, backgroundColor: colors.background },
+        tabBarActiveTintColor: colors.tint,
+        tabBarInactiveTintColor: colors.text,
+        tabBarLabelStyle: { fontFamily: typography.primary.medium, fontSize: 12 },
       }}
     >
       <Tab.Screen
@@ -44,7 +43,9 @@ export function TabNavigator() {
         component={QuoteScreen}
         options={{
           tabBarLabel: "Get quote",
-          // tabBarIcon: ({ color }) => <Icon name="quote" size={24} color={color} />,
+          tabBarIcon: ({ focused }) => (
+            <Icon icon="quote" color={focused ? colors.tint : undefined} size={30} />
+          ),
         }}
       />
       <Tab.Screen
@@ -52,7 +53,9 @@ export function TabNavigator() {
         component={FavoritesScreen}
         options={{
           tabBarLabel: "Favorites",
-          // tabBarIcon: ({ color }) => <Icon name="heart" size={24} color={color} />,
+          tabBarIcon: ({ focused }) => (
+            <Icon icon="heart" color={focused ? colors.tint : undefined} size={30} />
+          ),
         }}
       />
       <Tab.Screen
@@ -60,7 +63,9 @@ export function TabNavigator() {
         component={SettingsScreen}
         options={{
           tabBarLabel: "Settings",
-          // tabBarIcon: ({ color }) => <Icon name="gear" size={24} color={color} />,
+          tabBarIcon: ({ focused }) => (
+            <Icon icon="settings" color={focused ? colors.tint : undefined} size={30} />
+          ),
         }}
       />
       <Tab.Screen
@@ -68,25 +73,11 @@ export function TabNavigator() {
         component={AboutScreen}
         options={{
           tabBarLabel: "About",
-          // tabBarIcon: ({ color }) => <Icon name="info" size={24} color={color} />,
+          tabBarIcon: ({ focused }) => (
+            <Icon icon="info" color={focused ? colors.tint : undefined} size={30} />
+          ),
         }}
       />
     </Tab.Navigator>
   )
 }
-
-const $tabBar: ViewStyle = {
-  backgroundColor: colors.background,
-  borderTopColor: colors.transparent,
-}
-
-// const $tabBarItem: ViewStyle = {
-//   paddingTop: spacing.md,
-// }
-
-// const $tabBarLabel: TextStyle = {
-//   fontSize: 12,
-//   fontFamily: typography.primary.medium,
-//   lineHeight: 16,
-//   flex: 1,
-// }

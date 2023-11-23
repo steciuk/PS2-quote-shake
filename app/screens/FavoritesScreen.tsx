@@ -1,5 +1,6 @@
+import { Text } from "app/components"
 import React from "react"
 
 export const FavoritesScreen = () => {
-  return <div>FavoritesScreen</div>
+  return <Text text="FavoritesScreen" />
 }

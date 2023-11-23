@@ -1,5 +1,6 @@
+import { Text } from "app/components"
 import React from "react"
 
 export const QuoteScreen = () => {
-  return <div>QuoteScreen</div>
+  return <Text text="QuoteScreen" />
 }
