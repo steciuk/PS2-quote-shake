@@ -1,5 +1,4 @@
 import { Button, Text } from "app/components"
-import { observer } from "mobx-react-lite"
 import React, { FC } from "react"
 import { Image, ImageStyle, TextStyle, View, ViewStyle } from "react-native"
 
@@ -13,7 +12,7 @@ const welcomeFace = require("../../assets/images/welcome-face.png")
 
 interface WelcomeScreenProps extends AppStackScreenProps<"Welcome"> {}
 
-export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeScreen(props) {
+export const WelcomeScreen: FC<WelcomeScreenProps> = (props) => {
   const { navigation } = props
 
   const $bottomContainerInsets = useSafeAreaInsetsStyle(["bottom"])
@@ -41,7 +40,7 @@ export const WelcomeScreen: FC<WelcomeScreenProps> = observer(function WelcomeSc
       </View>
     </View>
   )
-})
+}
 
 const $container: ViewStyle = {
   flex: 1,

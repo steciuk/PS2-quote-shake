@@ -1,7 +1,6 @@
 import { TabNavigator, TabParamList } from "app/navigators/TabNavigator"
 import * as Screens from "app/screens"
 import { colors } from "app/theme"
-import { observer } from "mobx-react-lite"
 import React from "react"
 import { useColorScheme } from "react-native"
 
@@ -56,7 +55,7 @@ export type AppStackScreenProps<T extends keyof AppStackParamList> = NativeStack
 // Documentation: https://reactnavigation.org/docs/stack-navigator/
 const Stack = createNativeStackNavigator<AppStackParamList>()
 
-const AppStack = observer(function AppStack() {
+const AppStack = () => {
   return (
     <Stack.Navigator
       screenOptions={{ headerShown: false, navigationBarColor: colors.background }}
@@ -66,12 +65,12 @@ const AppStack = observer(function AppStack() {
       <Stack.Screen name="App" component={TabNavigator} />
     </Stack.Navigator>
   )
-})
+}
 
 export interface NavigationProps
   extends Partial<React.ComponentProps<typeof NavigationContainer>> {}
 
-export const AppNavigator = observer(function AppNavigator(props: NavigationProps) {
+export const AppNavigator = (props: NavigationProps) => {
   const colorScheme = useColorScheme()
 
   useBackButtonHandler((routeName) => exitRoutes.includes(routeName))
@@ -85,4 +84,4 @@ export const AppNavigator = observer(function AppNavigator(props: NavigationProp
       <AppStack />
     </NavigationContainer>
   )
-})
+}

@@ -1,44 +1,57 @@
-/**
- * This Api class lets you define an API endpoint and methods to request
- * data and process it.
- *
- * See the [Backend API Integration](https://github.com/infinitered/ignite/blob/master/docs/Backend-API-Integration.md)
- * documentation for more details.
- */
-import { ApisauceInstance, create } from "apisauce"
-import Config from "../../config"
-import type { ApiConfig } from "./api.types"
+import { ApiResponse, ApisauceInstance, create } from "apisauce"
+import { GeneralApiProblem, getGeneralApiProblem } from "app/services/api/apiProblem"
 
-/**
- * Configuring the apisauce instance.
- */
-export const DEFAULT_API_CONFIG: ApiConfig = {
-  url: Config.API_URL,
-  timeout: 10000,
+export type Quote = {
+  quoteText: string
+  quoteAuthor: string
+  senderName: string
+  senderLink: string
+  quoteLink: string
 }
 
-/**
- * Manages all requests to the API. You can use this class to build out
- * various requests that you need to call from your backend API.
- */
-export class Api {
-  apisauce: ApisauceInstance
-  config: ApiConfig
+class Api {
+  private apisauce: ApisauceInstance
 
   /**
    * Set up our API instance. Keep this lightweight!
    */
-  constructor(config: ApiConfig = DEFAULT_API_CONFIG) {
-    this.config = config
+  constructor() {
     this.apisauce = create({
-      baseURL: this.config.url,
-      timeout: this.config.timeout,
+      baseURL: "https://api.forismatic.com/api/1.0/",
+      timeout: 10000,
       headers: {
         Accept: "application/json",
       },
     })
   }
+
+  async getQuote(lang: string): Promise<{ kind: "ok"; quote: Quote } | GeneralApiProblem> {
+    const response: ApiResponse<Quote> = await this.apisauce.get("", {
+      method: "getQuote",
+      format: "json",
+      lang,
+    })
+
+    if (!response.ok) {
+      const problem = getGeneralApiProblem(response)
+      if (problem) return problem
+    }
+
+    try {
+      const rawQuote = response.data
+
+      if (!rawQuote) return { kind: "bad-data" }
+      if (typeof rawQuote.quoteText !== "string") return { kind: "bad-data" }
+      if (typeof rawQuote.quoteAuthor !== "string") return { kind: "bad-data" }
+      if (typeof rawQuote.senderName !== "string") return { kind: "bad-data" }
+      if (typeof rawQuote.senderLink !== "string") return { kind: "bad-data" }
+      if (typeof rawQuote.quoteLink !== "string") return { kind: "bad-data" }
+
+      return { kind: "ok", quote: rawQuote }
+    } catch (error) {
+      return { kind: "bad-data" }
+    }
+  }
 }
 
-// Singleton instance of the API for convenience
 export const api = new Api()
