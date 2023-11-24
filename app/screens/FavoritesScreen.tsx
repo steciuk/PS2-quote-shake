@@ -1,5 +1,4 @@
-import { Button, EmptyState, ListView, Screen, Text } from "app/components"
-import { QuoteCard } from "app/components/QuoteCard"
+import { Button, EmptyState, ListView, QuoteCard, Screen, Text } from "app/components"
 import {
   FavoriteQuotesContext,
   FavoriteQuotesManagerContext,

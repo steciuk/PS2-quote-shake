@@ -32,10 +32,11 @@ export function TabNavigator() {
       screenOptions={{
         headerShown: false,
         tabBarHideOnKeyboard: true,
-        tabBarStyle: { height: bottom + 70, backgroundColor: colors.background },
+        tabBarStyle: { height: bottom + 60, backgroundColor: colors.background, paddingTop: 10 },
         tabBarActiveTintColor: colors.tint,
         tabBarInactiveTintColor: colors.text,
         tabBarLabelStyle: { fontFamily: typography.primary.medium, fontSize: 12 },
+        tabBarItemStyle: {},
       }}
     >
       <Tab.Screen

@@ -1,5 +1,4 @@
-import { Button, Card, Screen, Text } from "app/components"
-import { QuoteCard } from "app/components/QuoteCard"
+import { Button, Card, QuoteCard, Screen, Text } from "app/components"
 import { FavoriteQuotesContext } from "app/contexts/FavoriteQuotesContext"
 import { SettingsContext } from "app/contexts/SettingsContext"
 import { api, Quote } from "app/services/api"
