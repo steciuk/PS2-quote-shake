@@ -1,5 +1,6 @@
 import { Quote } from "app/services/api"
-import React, { createContext, ReactNode, useState } from "react"
+import * as storage from "app/utils/storage"
+import React, { createContext, ReactNode, useEffect, useState } from "react"
 
 export const FavoriteQuotesContext = createContext<Quote[]>([])
 export const FavoriteQuotesManagerContext = createContext<{
@@ -15,20 +16,37 @@ export const FavoriteQuotesManagerContext = createContext<{
   clear: () => {},
 })
 
+const STORAGE_KEY = "FAVORITE_QUOTES"
+
 export const FavoriteQuotesProvider = ({ children }: { children: ReactNode }) => {
   const [favoriteQuotes, setFavoriteQuotes] = useState<Quote[]>([])
 
   const add = (quote: Quote) => {
-    setFavoriteQuotes([...favoriteQuotes, quote])
+    const newFavorites = [...favoriteQuotes, quote]
+    setFavoriteQuotes(newFavorites)
+    storage.save(STORAGE_KEY, newFavorites)
   }
 
   const remove = (quoteText: string) => {
-    setFavoriteQuotes(favoriteQuotes.filter((quote) => quote.quoteText !== quoteText))
+    const newFavorites = favoriteQuotes.filter((quote) => quote.quoteText !== quoteText)
+    setFavoriteQuotes(newFavorites)
+    storage.save(STORAGE_KEY, newFavorites)
   }
 
   const clear = () => {
     setFavoriteQuotes([])
+    storage.save(STORAGE_KEY, [])
   }
+
+  useEffect(() => {
+    const load = async () => {
+      const favorites = await storage.load<Quote[]>(STORAGE_KEY)
+      if (favorites) {
+        setFavoriteQuotes(favorites)
+      }
+    }
+    load()
+  }, [])
 
   return (
     <FavoriteQuotesContext.Provider value={favoriteQuotes}>
