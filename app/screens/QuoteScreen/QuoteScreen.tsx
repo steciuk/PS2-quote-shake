@@ -4,6 +4,7 @@ import { FavoriteQuotesContext } from "app/contexts/FavoriteQuotesContext"
 import { SettingsContext } from "app/contexts/SettingsContext"
 import { api, Quote } from "app/services/api"
 import { colors, spacing } from "app/theme"
+import { delay } from "app/utils/delay"
 import { Accelerometer, AccelerometerMeasurement } from "expo-sensors"
 import { Listener } from "expo-sensors/build/DeviceSensor"
 import React, { useContext, useMemo, useRef, useState } from "react"
@@ -15,7 +16,7 @@ const maxRetries = 10
 
 export const QuoteScreen = () => {
   const favorites = useContext(FavoriteQuotesContext)
-  const { language } = useContext(SettingsContext)
+  const { quotesLanguage, shakeEnabled, shakeSensitivity } = useContext(SettingsContext)
 
   const [lastQuote, setLastQuote] = useState<Quote | null>(null)
   const [isLoading, setIsLoading] = useState<boolean>(false)
@@ -39,8 +40,7 @@ export const QuoteScreen = () => {
     const currentErrors: string[] = []
 
     while (retry > 0) {
-      const quoteResponse = await api.getQuote(language)
-      // await delay(3000)
+      const quoteResponse = await api.getQuote(quotesLanguage)
 
       if (quoteResponse.kind === "ok") {
         const quote = quoteResponse.quote
@@ -57,6 +57,9 @@ export const QuoteScreen = () => {
         currentErrors.push(`Request failed: ${quoteResponse.kind}`)
         retry--
       }
+
+      // Add a delay between retries
+      retry > 0 && (await delay(500))
     }
 
     setErrors(currentErrors)
@@ -64,11 +67,13 @@ export const QuoteScreen = () => {
   }
 
   useFocusEffect(() => {
+    if (!shakeEnabled) return
+
     configureShake(() => {
       if (!isLoadingRef.current) {
         getQuote()
       }
-    })
+    }, shakeSensitivity)
 
     return () => {
       Accelerometer.removeAllListeners()
@@ -115,11 +120,19 @@ export const QuoteScreen = () => {
               gap: spacing.sm,
             }}
           >
-            <Text text="Shake the phone or press the button to get a new quote" />
-            <Image
-              source={require("assets/images/vibrating.png")}
-              style={{ height: 50, aspectRatio: 1 }}
+            <Text
+              text={
+                shakeEnabled
+                  ? "Shake the phone or press the button to get a new quote"
+                  : "Press the button to get a new quote"
+              }
             />
+            {shakeEnabled && (
+              <Image
+                source={require("assets/images/vibrating.png")}
+                style={{ height: 50, aspectRatio: 1 }}
+              />
+            )}
           </View>
         )}
       </View>
@@ -137,13 +150,12 @@ function isQuoteInFavorites(quote: Quote, favorites: Quote[]) {
   return favorites.some((q) => q.quoteText === quote.quoteText)
 }
 
-const configureShake = (onShake: (acceleration?: number) => void) => {
+const configureShake = (onShake: (acceleration?: number) => void, shakeSensitivity: number) => {
   Accelerometer.setUpdateInterval(200)
   const onUpdate: Listener<AccelerometerMeasurement> = ({ x, y, z }) => {
     const acceleration = Math.sqrt(x * x + y * y + z * z)
 
-    const sensibility = 1.8
-    if (acceleration >= sensibility) {
+    if (acceleration >= shakeSensitivity) {
       onShake(acceleration)
     }
   }
