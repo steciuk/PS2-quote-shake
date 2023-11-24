@@ -7,7 +7,7 @@ import { colors, spacing } from "app/theme"
 import { Accelerometer, AccelerometerMeasurement } from "expo-sensors"
 import { Listener } from "expo-sensors/build/DeviceSensor"
 import React, { useContext, useMemo, useRef, useState } from "react"
-import { Image, View } from "react-native"
+import { ActivityIndicator, Image, View } from "react-native"
 
 import { useFocusEffect } from "@react-navigation/core"
 
@@ -87,7 +87,7 @@ export const QuoteScreen = () => {
         }}
       >
         {isLoading ? (
-          <Text text="Loading..." />
+          <ActivityIndicator size={45} color={colors.palette.primary400} />
         ) : errors.length > 0 ? (
           <Card
             HeadingComponent={
@@ -107,7 +107,7 @@ export const QuoteScreen = () => {
             style={{ backgroundColor: colors.errorBackground }}
           />
         ) : lastQuote ? (
-          <QuoteCard quote={lastQuote} isFavorite={isFavorite} />
+          <QuoteCard quote={lastQuote} isFavorite={isFavorite} showButtons={true} />
         ) : (
           <View
             style={{

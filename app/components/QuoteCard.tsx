@@ -7,17 +7,27 @@ import { Quote } from "app/services/api"
 import { colors, spacing } from "app/theme"
 import { openLinkInBrowser } from "app/utils/openLinkInBrowser"
 import React, { useContext } from "react"
-import { View, ViewStyle } from "react-native"
+import { StyleProp, View, ViewStyle } from "react-native"
 
-export const QuoteCard = (props: { quote: Quote; isFavorite: boolean }) => {
+export const QuoteCard = (props: {
+  quote: Quote
+  isFavorite: boolean
+  showButtons?: boolean
+  onPress?: (quoteText: string) => void
+  style?: StyleProp<ViewStyle>
+}) => {
+  const { onPress, showButtons, style } = props
+
   const { add, remove } = useContext(FavoriteQuotesManagerContext)
   const { quote } = props
 
   return (
     <Card
+      style={[{ minHeight: 0 }, style]}
+      onPress={onPress ? () => onPress(quote.quoteText) : undefined}
       HeadingComponent={
         <Text
-          text={quote.quoteAuthor}
+          text={quote.quoteAuthor || "Unknown"}
           size="xs"
           style={{ color: colors.textDim, marginBottom: spacing.xxs }}
         />
@@ -26,41 +36,44 @@ export const QuoteCard = (props: { quote: Quote; isFavorite: boolean }) => {
         <Text text={quote.quoteText} size="md" weight="medium" style={{ fontStyle: "italic" }} />
       }
       FooterComponent={
-        <View
-          style={{
-            flexDirection: "row",
-            marginTop: spacing.sm,
-            alignItems: "center",
-            justifyContent: "space-between",
-          }}
-        >
-          <>
-            {props.isFavorite ? (
-              <Button
-                LeftAccessory={(...props) => (
-                  <Icon icon="heart" color={colors.palette.primary400} size={20} {...props} />
-                )}
-                onPress={() => remove(quote.quoteText)}
-                style={$favoriteButton}
-              />
-            ) : (
-              <Button
-                LeftAccessory={(...props) => (
-                  <Icon icon="heart" color={colors.text} size={20} {...props} />
-                )}
-                onPress={() => add(quote)}
-                style={$favoriteButton}
-              />
-            )}
-            <Button
-              LeftAccessory={(...props) => (
-                <Icon icon="info" color={colors.text} size={20} {...props} />
+        showButtons ? (
+          <View
+            style={{
+              flexDirection: "row",
+              marginTop: spacing.sm,
+              alignItems: "center",
+              justifyContent: "space-between",
+            }}
+          >
+            <>
+              {props.isFavorite ? (
+                <Button
+                  LeftAccessory={(...props) => (
+                    <Icon icon="heart" color={colors.palette.primary400} size={20} {...props} />
+                  )}
+                  onPress={() => remove(quote.quoteText)}
+                  style={$favoriteButton}
+                />
+              ) : (
+                <Button
+                  LeftAccessory={(...props) => (
+                    <Icon icon="heart" color={colors.text} size={20} {...props} />
+                  )}
+                  onPress={() => add(quote)}
+                  style={$favoriteButton}
+                />
               )}
-              onPress={() => openLinkInBrowser(getAuthorLink(quote.quoteAuthor))}
-              style={$infoButton}
-            />
-          </>
-        </View>
+              <Button
+                LeftAccessory={(...props) => (
+                  <Icon icon="info" color={colors.text} size={20} {...props} />
+                )}
+                onPress={() => openLinkInBrowser(getAuthorLink(quote.quoteAuthor))}
+                style={$infoButton}
+                disabled={!quote.quoteAuthor}
+              />
+            </>
+          </View>
+        ) : undefined
       }
     />
   )

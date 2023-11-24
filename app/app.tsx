@@ -20,7 +20,6 @@ import "./i18n"
 import "./utils/ignoreWarnings"
 
 import { FavoriteQuotesProvider } from "app/contexts/FavoriteQuotesContext"
-import { LastQuoteProvider } from "app/contexts/LastQuoteContext"
 import { SettingsProvider } from "app/contexts/SettingsContext"
 import { useFonts } from "expo-font"
 import * as Linking from "expo-linking"
@@ -84,15 +83,13 @@ function App() {
       <ErrorBoundary catchErrors={Config.catchErrors}>
         <GestureHandlerRootView style={$container}>
           <SettingsProvider>
-            <LastQuoteProvider>
-              <FavoriteQuotesProvider>
-                <AppNavigator
-                  linking={linking}
-                  initialState={initialNavigationState}
-                  onStateChange={onNavigationStateChange}
-                />
-              </FavoriteQuotesProvider>
-            </LastQuoteProvider>
+            <FavoriteQuotesProvider>
+              <AppNavigator
+                linking={linking}
+                initialState={initialNavigationState}
+                onStateChange={onNavigationStateChange}
+              />
+            </FavoriteQuotesProvider>
           </SettingsProvider>
         </GestureHandlerRootView>
       </ErrorBoundary>
