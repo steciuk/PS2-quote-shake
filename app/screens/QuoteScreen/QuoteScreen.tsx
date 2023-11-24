@@ -76,7 +76,7 @@ export const QuoteScreen = () => {
   })
 
   return (
-    <Screen preset="fixed" safeAreaEdges={["bottom", "top"]} style={{ padding: 15 }}>
+    <Screen preset="fixed" safeAreaEdges={["bottom", "top"]} style={{ padding: spacing.md }}>
       <View
         style={{
           flex: 1,
@@ -138,20 +138,10 @@ function isQuoteInFavorites(quote: Quote, favorites: Quote[]) {
 }
 
 const configureShake = (onShake: (acceleration?: number) => void) => {
-  // update value every 100ms.
-  // Adjust this interval to detect
-  // faster (20ms) or slower shakes (500ms)
   Accelerometer.setUpdateInterval(200)
-
-  // at each update, we have acceleration registered on 3 axis
-  // 1 = no device movement, only acceleration caused by gravity
   const onUpdate: Listener<AccelerometerMeasurement> = ({ x, y, z }) => {
-    // compute a total acceleration value, here with a square sum
-    // you can eventually change the formula
-    // if you want to prioritize an axis
     const acceleration = Math.sqrt(x * x + y * y + z * z)
 
-    // Adjust sensibility, because it can depend of usage (& devices)
     const sensibility = 1.8
     if (acceleration >= sensibility) {
       onShake(acceleration)
