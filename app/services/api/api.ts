@@ -26,7 +26,7 @@ class Api {
   }
 
   async getQuote(lang: string): Promise<{ kind: "ok"; quote: Quote } | GeneralApiProblem> {
-    const response: ApiResponse<Quote> = await this.apisauce.get("", {
+    const response: ApiResponse<Quote | string> = await this.apisauce.get("", {
       method: "getQuote",
       format: "json",
       lang,
@@ -39,15 +39,21 @@ class Api {
 
     try {
       const rawQuote = response.data
-
       if (!rawQuote) return { kind: "bad-data" }
-      if (typeof rawQuote.quoteText !== "string") return { kind: "bad-data" }
-      if (typeof rawQuote.quoteAuthor !== "string") return { kind: "bad-data" }
-      if (typeof rawQuote.senderName !== "string") return { kind: "bad-data" }
-      if (typeof rawQuote.senderLink !== "string") return { kind: "bad-data" }
-      if (typeof rawQuote.quoteLink !== "string") return { kind: "bad-data" }
 
-      return { kind: "ok", quote: rawQuote }
+      const parsedQuote: Quote = typeof rawQuote === "string" ? JSON.parse(rawQuote) : rawQuote
+
+      if (
+        typeof parsedQuote.quoteText !== "string" ||
+        typeof parsedQuote.quoteAuthor !== "string" ||
+        typeof parsedQuote.senderName !== "string" ||
+        typeof parsedQuote.senderLink !== "string" ||
+        typeof parsedQuote.quoteLink !== "string"
+      ) {
+        return { kind: "bad-data" }
+      }
+
+      return { kind: "ok", quote: parsedQuote }
     } catch (error) {
       return { kind: "bad-data" }
     }
