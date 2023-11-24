@@ -1,7 +1,9 @@
-import { Button, Text } from "app/components"
+import { Button, Card, Screen, Text } from "app/components"
+import { QuoteCard } from "app/components/QuoteCard"
 import { FavoriteQuotesContext } from "app/contexts/FavoriteQuotesContext"
 import { SettingsContext } from "app/contexts/SettingsContext"
 import { api, Quote } from "app/services/api"
+import { colors } from "app/theme"
 import React, { useContext, useMemo, useState } from "react"
 import { View } from "react-native"
 
@@ -48,28 +50,39 @@ export const QuoteScreen = () => {
   }
 
   return (
-    <View
-      style={{
-        flex: 1,
-        alignItems: "center",
-        justifyContent: "center",
-      }}
-    >
-      {isLoading ? (
-        <Text text="Loading..." />
-      ) : error ? (
-        <Text text={error} />
-      ) : lastQuote ? (
-        <Text text={lastQuote.quoteText} />
-      ) : (
-        <Text text="No quote" />
-      )}
+    <Screen preset="fixed" safeAreaEdges={["bottom", "top"]} style={{ padding: 15 }}>
+      <View
+        style={{
+          flex: 1,
+          flexBasis: "90%",
+          flexDirection: "column",
+          alignItems: "center",
+          justifyContent: "center",
+        }}
+      >
+        {isLoading ? (
+          <Text text="Loading..." />
+        ) : error ? (
+          <Card
+            HeadingComponent={
+              <Text text="Error" size="lg" weight="medium" style={{ color: colors.error }} />
+            }
+            ContentComponent={<Text text={error} style={{ color: colors.error }} />}
+            style={{ backgroundColor: colors.errorBackground }}
+          />
+        ) : lastQuote ? (
+          <QuoteCard quote={lastQuote} isFavorite={isFavorite} />
+        ) : (
+          <Text text="No quote" />
+        )}
+      </View>
       <Button
+        preset="default"
         text={lastQuote && !error ? "Get another quote" : "Get a quote"}
         onPress={getQuote}
         disabled={isLoading}
       />
-    </View>
+    </Screen>
   )
 }
 

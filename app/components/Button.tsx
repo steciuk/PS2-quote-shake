@@ -7,6 +7,7 @@ import {
   TextStyle,
   ViewStyle,
 } from "react-native"
+
 import { colors, spacing, typography } from "../theme"
 import { Text, TextProps } from "./Text"
 
@@ -85,6 +86,7 @@ export function Button(props: ButtonProps) {
     children,
     RightAccessory,
     LeftAccessory,
+    disabled,
     ...rest
   } = props
 
@@ -94,6 +96,7 @@ export function Button(props: ButtonProps) {
       $viewPresets[preset],
       $viewStyleOverride,
       !!pressed && [$pressedViewPresets[preset], $pressedViewStyleOverride],
+      !!disabled && $disabledViewPresets[preset],
     ]
   }
   function $textStyle({ pressed }: PressableStateCallbackType) {
@@ -105,7 +108,7 @@ export function Button(props: ButtonProps) {
   }
 
   return (
-    <Pressable style={$viewStyle} accessibilityRole="button" {...rest}>
+    <Pressable style={$viewStyle} accessibilityRole="button" disabled={disabled} {...rest}>
       {(state) => (
         <>
           {!!LeftAccessory && <LeftAccessory style={$leftAccessoryStyle} pressableState={state} />}
@@ -181,4 +184,10 @@ const $pressedTextPresets: Record<Presets, StyleProp<TextStyle>> = {
   default: { opacity: 0.9 },
   filled: { opacity: 0.9 },
   reversed: { opacity: 0.9 },
+}
+
+const $disabledViewPresets: Record<Presets, StyleProp<ViewStyle>> = {
+  default: { backgroundColor: colors.palette.neutral400 },
+  filled: { backgroundColor: colors.palette.neutral100 },
+  reversed: { backgroundColor: colors.palette.neutral500 },
 }
