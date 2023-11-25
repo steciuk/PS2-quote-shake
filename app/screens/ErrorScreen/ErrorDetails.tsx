@@ -1,6 +1,7 @@
 import React, { ErrorInfo } from "react"
 import { ScrollView, TextStyle, View, ViewStyle } from "react-native"
-import { Button, Icon, Screen, Text } from "../../components"
+
+import { Button, Link, Screen, Text } from "../../components"
 import { colors, spacing } from "../../theme"
 
 export interface ErrorDetailsProps {
@@ -17,9 +18,11 @@ export function ErrorDetails(props: ErrorDetailsProps) {
       contentContainerStyle={$contentContainer}
     >
       <View style={$topSection}>
-        <Icon icon="ladybug" size={64} />
-        <Text style={$heading} preset="subheading" tx="errorScreen.title" />
-        <Text tx="errorScreen.friendlySubtitle" />
+        <Text style={$heading} preset="subheading" text="Something went wrong!" />
+        <Text text="Check for existing issues at: " />
+        <Link label="Github issues" link="https://github.com/steciuk/PS2-quote-shake/issues" />
+        <Text text="or create a new one: " />
+        <Link label="New issue" link="https://github.com/steciuk/PS2-quote-shake/issues/new" />
       </View>
 
       <ScrollView style={$errorSection} contentContainerStyle={$errorSectionContentContainer}>
@@ -35,7 +38,7 @@ export function ErrorDetails(props: ErrorDetailsProps) {
         preset="reversed"
         style={$resetButton}
         onPress={props.onReset}
-        tx="errorScreen.reset"
+        text="Restart the app"
       />
     </Screen>
   )
@@ -49,7 +52,6 @@ const $contentContainer: ViewStyle = {
 }
 
 const $topSection: ViewStyle = {
-  flex: 1,
   alignItems: "center",
 }
 

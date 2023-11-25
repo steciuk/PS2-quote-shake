@@ -6,7 +6,7 @@ import { spacing } from "../theme"
 import { Button, ButtonProps } from "./Button"
 import { Text, TextProps } from "./Text"
 
-const sadFace = require("../../assets/images/sad-face.png")
+const sadFace = require("../../assets/images/empty.png")
 
 interface EmptyStateProps {
   /**
