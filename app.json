@@ -3,7 +3,7 @@
   "displayName": "QuoteShake",
   "expo": {
     "name": "QuoteShake",
-    "slug": "QuoteShake",
+    "slug": "quote-shake",
     "scheme": "quoteshake",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -67,7 +67,13 @@
     ],
     "experiments": {
       "tsconfigPaths": true
-    }
+    },
+    "extra": {
+      "eas": {
+        "projectId": "194c4558-aabe-4cf0-a559-0162b158bc15"
+      }
+    },
+    "owner": "steciuk"
   },
   "ignite": {
     "version": "9.0.2"
