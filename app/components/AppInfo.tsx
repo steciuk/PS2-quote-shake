@@ -15,7 +15,7 @@ export const AppInfo = () => {
       <View style={{ marginTop: spacing.xl, alignItems: "center" }}>
         <Text text="Made with ♥ by Adam Steciuk" />
         <Link label="https://github.com/steciuk" link="https://github.com/steciuk" />
-        <Link label="a.t.steciuk@gmail.com" link="mailto:a.t.steciuk@gmail.com" />
+        <Link label="a.t.steciuk@gmail.com" link="a.t.steciuk@gmail.com" mailto={true} />
       </View>
     </View>
   )
