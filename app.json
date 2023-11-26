@@ -10,7 +10,7 @@
     "icon": "./assets/images/app-icon-all.png",
     "splash": {
       "image": "./assets/images/quoteshake.png",
-      "resizeMode": "none",
+      "resizeMode": "contain",
       "backgroundColor": "#F4F2F1"
     },
     "updates": {
@@ -27,7 +27,7 @@
       },
       "splash": {
         "image": "./assets/images/quoteshake.png",
-        "resizeMode": "none",
+        "resizeMode": "contain",
         "backgroundColor": "#F4F2F1"
       }
     },
@@ -38,7 +38,7 @@
       "splash": {
         "image": "./assets/images/quoteshake.png",
         "tabletImage": "./assets/images/quoteshake.png",
-        "resizeMode": "none",
+        "resizeMode": "contain",
         "backgroundColor": "#F4F2F1"
       }
     },
@@ -46,7 +46,7 @@
       "favicon": "./assets/images/app-icon-web-favicon.png",
       "splash": {
         "image": "./assets/images/quoteshake.png",
-        "resizeMode": "none",
+        "resizeMode": "contain",
         "backgroundColor": "#F4F2F1"
       },
       "bundler": "metro"

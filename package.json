@@ -18,6 +18,7 @@
     "build:android:sim": "eas build --profile development --platform android --local",
     "build:android:dev": "eas build --profile development:device --platform android --local",
     "build:android:prod": "eas build --profile production --platform android --local",
+    "build:android:dev:expo": "eas build --profile development:device --platform android",
     "start": "npx expo start",
     "android": "npx expo run:android",
     "ios": "npx expo run:ios",
