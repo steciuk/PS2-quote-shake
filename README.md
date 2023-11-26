@@ -20,6 +20,7 @@ Simple React Native quotes app.
 
 <p float="left">
   <img src="./screenshots/Screenshot_Quote_empty.jpg" width="200" />
+  <img src="./screenshots/Screenshot_Quote_empty_shake-disabled.jpg" width="200" />
   <img src="./screenshots/Screenshot_Quote.jpg" width="200" />
 </p>
 
