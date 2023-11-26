@@ -12,37 +12,43 @@ Simple React Native quotes app.
 
 ### Get quote screen
 
-- On button press or on phone shake, a new quote is fetched from the API and displayed on the screen.
-- If the received quote is already in favorites, a new one is fetched.
+- A button press or a phone shake fetches a new quote from the API and displays on the screen.
+- A new one is fetched if the received quote is already in favorites.
 - Retry mechanism is implemented in case of API failure.
 - The quote can be added to favorites.
-- If quote author is available, user can open a Wikipedia page about the author.
+- If the quote author is available, the user can open a Wikipedia page about the author.
 
-<img src="./screenshots/Screenshot_Quote_empty.jpg" width="200" />
-<img src="./screenshots/Screenshot_Quote.jpg" width="200" />
+<p float="left">
+  <img src="./screenshots/Screenshot_Quote_empty.jpg" width="200" />
+  <img src="./screenshots/Screenshot_Quote.jpg" width="200" />
+</p>
 
 ### Favorites screen
 
-- Favorites quotes are persisted in AsyncStorage.
+- Favorite quotes are persisted in AsyncStorage.
 - All quotes added to favorites are displayed.
 - If there are no quotes in favorites, a message is displayed.
-- If quote is selected, it can be removed from favorites or opened in Wikipedia (if information about the author is present).
+- If the quote is selected, it can be removed from favorites or opened in Wikipedia (if information about the author is present).
 - All quotes can be removed from favorites at once. A confirmation dialog is displayed.
 
-<img src="./screenshots/Screenshot_Favorites.jpg" width="200" />
-<img src="./screenshots/Screenshot_Favorites_confirmation.jpg" width="200" />
-<img src="./screenshots/Screenshot_Favorites_empty.jpg" width="200" />
+<p float="left">
+  <img src="./screenshots/Screenshot_Favorites.jpg" width="200" />
+  <img src="./screenshots/Screenshot_Favorites_confirmation.jpg" width="200" />
+  <img src="./screenshots/Screenshot_Favorites_empty.jpg" width="200" />
+</p>
 
 ### Settings screen
 
 - All settings are persisted in AsyncStorage.
-- The language of the quotes received can be changed (English or Russian).
-- Getting quotes on phone shake can be enabled or disabled.
+- The language of the quotes received (English or Russian) can be changed.
+- Getting quotes on phone shakes can be enabled or disabled.
 - Phone shake sensitivity can be changed (if enabled).
 - The app can be reset to default settings.
 
-<img src="./screenshots/Screenshot_Settings.jpg" width="200" />
-<img src="./screenshots/Screenshot_Settings_shake-disabled.jpg" width="200" />
+<p float="left">
+  <img src="./screenshots/Screenshot_Settings.jpg" width="200" />
+  <img src="./screenshots/Screenshot_Settings_shake-disabled.jpg" width="200" />
+</p>
 
 ### About screen
 
