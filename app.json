@@ -1,8 +1,8 @@
 {
-  "name": "QuoteShake",
+  "name": "Quote Shake",
   "displayName": "Quote Shake",
   "expo": {
-    "name": "QuoteShake",
+    "name": "Quote Shake",
     "slug": "quote-shake",
     "scheme": "quoteshake",
     "version": "1.0.0",

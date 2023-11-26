@@ -90,3 +90,5 @@ web-build/
 !env.js
 
 /coverage
+
+screenshots/original/
